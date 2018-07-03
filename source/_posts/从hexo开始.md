@@ -21,6 +21,10 @@ $ npm install
 ``` bash
 $ hexo new [layout] <title>
 ```
+* 本地启动
+``` bash
+$ hexo server
+```
 * 生成静态文件
 ``` bash
 $ hexo generate
