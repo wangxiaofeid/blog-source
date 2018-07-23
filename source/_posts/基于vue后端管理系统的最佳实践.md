@@ -36,7 +36,7 @@ tags: vue 后台
 ```
 
 ### 如何使用
-```
+``` bash
 /* clone 到本地 */
 git clone https://github.com/wangxiaofeid/vue-admin-best
 
@@ -51,9 +51,9 @@ npm run build
 ```
 
 ### 如何新建一个页面
-```
+``` bash
 npm run cleate <pageName>
-```
+``` 
 根据设置的名称一次性创建页面component, router, store, edit弹窗；
 store为modules里面的子store，名称约定为`${pageName}Store`，开启命名空间；
 
@@ -64,4 +64,3 @@ store为modules里面的子store，名称约定为`${pageName}Store`，开启命
 * 本例使用了淘宝的[rap2](http://rap2.taobao.org/repository/editor?id=18404&itf=133875)，可以理解为部署在服务端的mock.js的实现
 
 ### 不足待改进的地方
-不解释，感觉自己棒棒哒！
