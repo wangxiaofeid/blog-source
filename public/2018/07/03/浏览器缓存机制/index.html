@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="xiaofei.wang"><title>浏览器缓存机制 · 王小飞的个人博客</title><meta name="description" content="浏览器http请求的流程
+第一次请求
+
+再次请求
+
+
+两种缓存形式及判断标准
+强缓存
+解释：用户发送的请求，直接从客户端缓存中获取，不发送请求到服务器，不与服务器发生交互行为。
+判断标准：根据cache-control、expires判断，cache-control(http1.1标准)会覆盖exp"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">王小飞的个人博客</a></h3></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai </a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/about">关于</a></li><li><a href="/archives">归档</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>浏览器缓存机制</a></h3></div><div class="post-content"><h3 id="浏览器http请求的流程"><a href="#浏览器http请求的流程" class="headerlink" title="浏览器http请求的流程"></a>浏览器http请求的流程</h3><ul>
+<li><p>第一次请求<br><img src="/images/cache1.png" alt="avatar"></p>
+</li>
+<li><p>再次请求<br><img src="/images/cache2.png" alt="avatar"></p>
+</li>
+</ul>
+<h3 id="两种缓存形式及判断标准"><a href="#两种缓存形式及判断标准" class="headerlink" title="两种缓存形式及判断标准"></a>两种缓存形式及判断标准</h3><ol>
+<li>强缓存<ul>
+<li>解释：用户发送的请求，直接从客户端缓存中获取，不发送请求到服务器，不与服务器发生交互行为。</li>
+<li>判断标准：根据cache-control、expires判断，cache-control(http1.1标准)会覆盖expires(http1.0标准)</li>
+</ul>
+</li>
+<li>协商缓存<ul>
+<li>解释：用户发送的请求，发送到服务器后，由服务器判定是否从缓存中获取资源。</li>
+<li>判断标准：根据Etag和Last-modified判断</li>
+<li>其他：如果无更新会返回304状态码，如果有更新则返回最新的文件，且跟随返回最新的Etag和Last-modified</li>
+</ul>
+</li>
+</ol>
+<h3 id="四个缓存判断字段的解释"><a href="#四个缓存判断字段的解释" class="headerlink" title="四个缓存判断字段的解释"></a>四个缓存判断字段的解释</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>expires</td>
+<td>过期时间点，服务器时间</td>
+</tr>
+<tr>
+<td>cache-control</td>
+<td>过期时长，可根据max-age指定过期时长</td>
+</tr>
+<tr>
+<td>Etag</td>
+<td>根据文件内容生成的字符串</td>
+</tr>
+<tr>
+<td>Last-modified</td>
+<td>文件修改时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="问题及思考"><a href="#问题及思考" class="headerlink" title="问题及思考"></a>问题及思考</h3><ol>
+<li><p>expires是先于cache-control出现的，那为什么有了expires还需要cache-control呢？有时候同时设置这两是为什么呢？<br>expires是以服务器时间为准，cache-control的max-age是一个相对时间，以客户端时间为准，他两判断逻辑在浏览器完成，而客户端和服务端时间可能不一致，cache-control就是为了弥补这一缺陷而产生的。同时设置两个的好处，1. 浏览器兼容性，2.弥补缺陷</p>
+</li>
+<li><p>Etag 和 Last-modified同时存在的原因？<br>Last-Modified 的问题在于它的精度在秒(s)的级别；参考文章<a href="https://www.zhihu.com/question/22883627" target="_blank" rel="noopener">关于浏览器的缓存，有了Etag，last-Modified还有必要存在吗？</a></p>
+</li>
+<li><p>F5刷新（window–&gt;F5；OSX–&gt;command＋r）强缓存没了，浏览器怎么做的？</p>
+</li>
+<li><p>强刷（window–&gt;Ctrl+F5；OSX–&gt;command＋shift＋r），浏览器怎么做的？</p>
+</li>
+<li>为什么有时候刷新或者强刷后缓存还在？<br>可能资源放在cdn，而文件刚上传的时候可能还没同步到访问的那个cdn节点上，同样cdn节点上也会有缓存。</li>
+<li>我只想某个文件不缓存，其他文件可缓存应该怎么操作？<br>script动态插入，时间戳跟随机数</li>
+</ol>
+<h3 id="资源推荐"><a href="#资源推荐" class="headerlink" title="资源推荐"></a>资源推荐</h3><ul>
+<li><a href="https://github.com/fouber/blog/issues/6" target="_blank" rel="noopener">大公司里怎样开发和部署前端代码</a> </li>
+</ul>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2018-07-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/缓存/" title="缓存">缓存 </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="http://twitter.com/home?status=,https://wangxiaofeid.github.io/2018/07/03/浏览器缓存机制/,王小飞的个人博客,浏览器缓存机制,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2018/07/09/基于vue后端管理系统的最佳实践/" title="基于vue后端管理系统的最佳实践">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2018/06/28/从hexo开始/" title="从hexo开始">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
