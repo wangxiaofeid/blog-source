@@ -1,7 +1,7 @@
 ---
 title: '记:Object内部属性顺序'
 date: 2018-07-28 14:55:56
-tags:
+tags: js
 ---
 
 ## 结论

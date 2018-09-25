@@ -1,7 +1,7 @@
 ---
 title: React优化笔记
 date: 2018-09-07 16:57:08
-tags:
+tags: 优化 react
 ---
 
 平时看一些react文章，都有些性能相关的建议，以此记录。

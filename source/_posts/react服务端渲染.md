@@ -1,7 +1,7 @@
 ---
 title: react服务端渲染
 date: 2018-07-21 17:19:43
-tags:
+tags: ssr
 ---
 
 很久之前写的一个项目[https://github.com/wangxiaofeid/reactServerRender](https://github.com/wangxiaofeid/reactServerRender)

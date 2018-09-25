@@ -1,7 +1,7 @@
 ---
 title: 【转】react组件生命周期（v16.3.1）
 date: 2018-08-27 10:54:10
-tags:
+tags: react lifecycle
 ---
 
 在每个react组件中都有以下几个生命周期方法~我们需要在不同阶段进行讨论

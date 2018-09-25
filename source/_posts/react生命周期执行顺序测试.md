@@ -1,7 +1,7 @@
 ---
 title: react生命周期执行顺序测试
 date: 2018-09-04 19:23:23
-tags:
+tags: react lifecycle
 ---
 
 项目地址：[https://github.com/wangxiaofeid/react-lifecycle](https://github.com/wangxiaofeid/react-lifecycle)
